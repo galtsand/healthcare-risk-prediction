@@ -1,124 +1,121 @@
-Healthcare Risk Prediction
+🔷 Healthcare Risk Prediction
 Overview
 
-This project builds a predictive model to identify healthcare members at risk of becoming high-cost in a future period. Using synthetic but realistic healthcare data, the solution combines member demographics, longitudinal cost patterns, medical claims, and provider utilization behavior to generate actionable risk insights.
+This project develops a healthcare risk stratification model to identify members at high risk of becoming high-cost within a future 6-month period. Using synthetic but realistic claims-based data, the solution combines longitudinal cost, utilization, and risk signals to generate actionable predictions.
 
-The goal is to support early intervention, care management, and cost containment strategies in both fee-for-service and value-based care environments.
+The model achieves ~0.89 ROC-AUC and concentrates ~70% of high-cost members within the top decile, enabling highly targeted intervention strategies.
 
 Business Problem
 
-Healthcare costs are highly concentrated, with a small percentage of members driving a large portion of total spend. Identifying these members early allows organizations to:
+Healthcare spend is highly skewed, with a small percentage of members driving the majority of costs. Early identification of these members allows organizations to:
 
 Target care management programs
-
-Reduce avoidable utilization (e.g., ED visits, readmissions)
-
-Improve financial performance under value-based contracts
-
-Optimize provider engagement and care coordination
-
-This project focuses on predicting future high-cost members using historical utilization and risk signals.
-
+Reduce avoidable utilization (ED visits, readmissions)
+Improve outcomes under value-based care contracts
+Optimize provider engagement and resource allocation
 Data Model (Synthetic)
 
-The project uses a synthetic healthcare dataset modeled after real-world payer/provider systems.
+The dataset is designed to reflect real-world payer/provider systems.
 
-Core Tables
+Core Tables:
 
-vbc_members – Member demographics, enrollment, and risk indicators
-
-vbc_member_month – Longitudinal monthly cost and RAF signals
-
-vbc_medical_claims – Detailed claims with utilization and clinical flags
-
-vbc_attribution_input – Provider attribution and visit patterns
-
+vbc_members – demographics, enrollment, risk indicators
+vbc_member_month – longitudinal cost and RAF signals
+vbc_medical_claims – claims, utilization, and clinical proxies
+vbc_attribution_input – provider attribution and visit behavior
 Feature Engineering
 
-Features are built using rolling historical windows (e.g., last 6–12 months):
+Features are dynamically generated using rolling historical windows (6–12 months):
 
 Cost & Utilization
 
-Total medical and Rx cost
-
-PMPM (per member per month)
-
-Claim counts and cost trends
+Total cost (6m / 12m)
+Medical vs Rx spend
+Utilization intensity (claims, visits, admits)
+PMPM and cost aggregation metrics
 
 Clinical & Risk
 
-RAF score (risk adjustment)
+RAF scores
+Diagnosis / medication complexity proxies
+Readmission and acute event indicators
 
-Chronic condition proxies (via diagnosis counts)
+Derived Signals
 
-Readmissions and avoidable ED events
-
-Provider Behavior
-
-PCP vs specialist visit patterns
-
-Professional cost signals
-
-Attribution indicators
-
+Utilization intensity (aggregated activity signal)
+Complexity score (risk + medication diversity)
+Acute event flag (ED / inpatient activity)
+Interaction features (cost × utilization)
 Target Definition
-
-The model predicts:
 
 High-Cost Next 6 Months Flag
 
-A member is labeled as high-cost if their total allowed cost in a future 6-month window exceeds a defined threshold or falls within the top cost percentile.
+Members are labeled as high-cost if their future 6-month cost exceeds a threshold derived from the cost distribution.
+
+A learnable target construction approach ensures realistic class balance (~14–15%).
 
 Modeling Approach
 
-Logistic Regression (baseline, interpretable)
+Models evaluated:
 
-Tree-based model (e.g., Random Forest or XGBoost)
+Logistic Regression (baseline)
+Random Forest
+XGBoost (primary model)
 
-Evaluation includes:
+Performance:
 
-ROC-AUC
+ROC-AUC: ~0.89
+Strong recall for high-cost members (~92%)
+Effective precision in top risk tier
+Model Performance (Key Insight)
 
-Precision / Recall
+Top 10% Risk Segment:
 
-Cost concentration by risk tier
+~70% of high-cost members captured
+High precision targeting for intervention
 
+Risk Decile Behavior:
+
+Bottom deciles: near-zero high-cost rate
+Top decile: ~70% high-cost rate
+
+👉 Demonstrates strong ranking power and cost concentration
+
+Explainability
+
+SHAP (SHapley Additive Explanations) is used to interpret model predictions:
+
+Global feature importance (top drivers of risk)
+Feature impact direction (what increases/decreases risk)
+Member-level explainability (why a specific member is flagged)
+
+Key Drivers Identified:
+
+Total cost (6m / 12m)
+Utilization intensity
+Inpatient and high-cost claim activity
+RAF / risk indicators
 Outputs
-
 Member-level risk scores
-
-Risk stratification (Low / Medium / High)
-
-Feature importance insights
-
-Summary of cost distribution by risk segment
-
+Risk stratification (deciles)
+Top high-risk cohort for intervention
+Feature importance and SHAP explainability plots
 Repository Structure
 data/        # raw and processed datasets
-sql/         # feature and target dataset creation
+sql/         # feature and target creation logic
 notebooks/   # model development and analysis
-outputs/     # scored results and metrics
-src/         # optional modular Python code
+outputs/     # predictions, SHAP plots, metrics
+src/         # modular pipeline code
 Future Enhancements
-
-Incorporate pharmacy claims (specialty Rx signals)
-
-Add encounter-level data (DRG, LOS, service line)
-
-Introduce model explainability (SHAP)
-
+Incorporate pharmacy-specific signals (specialty Rx)
+Add encounter-level features (DRG, LOS)
+Enhance temporal modeling (sequence-based features)
 Build interactive dashboard (Power BI / Streamlit)
-
-Related Work
-
-This project complements additional healthcare analytics work focused on:
-
-Value-Based Care (VBC) financial modeling
-
-Fee-for-Service (FFS) encounter analytics
-
-Data engineering pipelines for healthcare data platforms
-
 Key Takeaway
 
-This project demonstrates how healthcare data can be transformed into a predictive framework that supports proactive decision-making, cost control, and improved patient outcomes.
+This project demonstrates how healthcare data can be transformed into a predictive risk framework that:
+
+Identifies high-cost members early
+Enables targeted intervention
+Improves cost efficiency
+Supports value-based care strategies
