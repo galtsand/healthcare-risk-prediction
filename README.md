@@ -71,6 +71,39 @@ A member is labeled as high-cost if their total allowed cost in a future 6-month
 
 Modeling Approach
 
+## Results
+- ROC-AUC: ~0.89
+- Top decile captures ~70% of high-cost members
+- Model effectively segments members into actionable risk tiers
+
+The model demonstrates strong ability to identify high-cost members early, enabling targeted intervention strategies.
+
+## Model Explainability (SHAP)
+
+To support transparency and real-world healthcare decision-making, SHAP (SHapley Additive Explanations) was used to interpret model predictions.
+
+Explainability is critical in healthcare to ensure models are auditable, trustworthy, and aligned with clinical and operational workflows.
+
+### Key Insights
+
+- Historical cost and utilization are the strongest predictors of future high-cost status
+- Members with rising utilization trends show significantly higher risk
+- Pharmacy and specialist utilization contribute meaningfully to risk stratification
+
+### SHAP Summary Plot
+
+![SHAP Summary](images/shap_summary.png)
+
+This plot shows the global impact of features across all predictions.
+
+### Feature Importance
+
+![Feature Importance](images/shap_bar.png)
+
+Top variables contributing to model predictions.
+
+
+
 Logistic Regression (baseline, interpretable)
 
 Tree-based model (e.g., Random Forest or XGBoost)
