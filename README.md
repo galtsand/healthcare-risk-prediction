@@ -86,7 +86,7 @@ Explainability is critical in healthcare to ensure models are auditable, trustwo
 
 ### Key Insights
 
-- Historical cost and utilization are the strongest predictors of future high-cost status
+- Cost and utilization patterns are the strongest drivers of future high-cost status, with demographic and clinical complexity factors providing additional signal
 - Members with rising utilization trends show significantly higher risk
 - Pharmacy and specialist utilization contribute meaningfully to risk stratification
 
@@ -102,7 +102,17 @@ This plot shows the global impact of features across all predictions.
 
 Top variables contributing to model predictions.
 
+These insights enable targeted intervention strategies, such as care management outreach for members with rising utilization trends or high recent spend.
 
+![SHAP Summary](shap_summary.png)
+
+### Feature Importance
+
+![Feature Importance](shap_bar.png)
+
+Top variables contributing to model predictions.
+
+These insights enable targeted intervention strategies, such as care management outreach for members with rising utilization trends or high recent spend.
 
 Logistic Regression (baseline, interpretable)
 
