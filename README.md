@@ -98,7 +98,7 @@ This plot shows the global impact of features across all predictions.
 
 ### Feature Importance
 
-![Feature Importance](images/shap_bar.png)
+![Feature Importance]([images/shap_bar.png](https://github.com/galtsand/healthcare-risk-prediction/blob/main/shap_summary.png))
 
 Top variables contributing to model predictions.
 
