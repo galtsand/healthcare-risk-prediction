@@ -92,13 +92,13 @@ Explainability is critical in healthcare to ensure models are auditable, trustwo
 
 ### SHAP Summary Plot
 
-![SHAP Summary](images/shap_summary.png)
+![SHAP Summary](shap_summary.png)
 
 This plot shows the global impact of features across all predictions.
 
 ### Feature Importance
 
-![Feature Importance]([images/shap_bar.png](https://github.com/galtsand/healthcare-risk-prediction/blob/main/shap_summary.png))
+![Feature Importance](shap_bar.png)
 
 Top variables contributing to model predictions.
 
